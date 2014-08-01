@@ -2,4 +2,4 @@
 source "https://rubygems.org"
 
 gem 'rspec'
-gem 'rantly'
+gem 'rantly', github: 'hayeah/rantly'
