@@ -1,5 +1,6 @@
 require 'rspec'
 require 'rantly/property'
+require 'rantly/shrinks'
 require 'rantly/rspec_extensions'
 require 'products_sorter'
 
