@@ -20,7 +20,7 @@ describe "property testing" do
     property_of {
       len = range(2, 20)
       array(len) {
-        freq([1,:range,0,1], [1,:range,0,100], [1, :positive_integer])
+        freq([1, :literal, nil], [1,:range,0,1], [1,:range,0,100], [1, :positive_integer])
       }
     }.check { |stocks|
       products = build_products(stocks)
@@ -28,13 +28,13 @@ describe "property testing" do
       sorted_products = ProductsSorter.new.sort(products)
 
       # assert keep sort order for products with stock >= 100
-      products_gte_100 = products.select { |p| p.variants.any? {|v| v.stock >= 100} }
-      sorted_products_gte_100 = sorted_products.select { |p| p.variants.any? {|v| v.stock >= 100} }
+      products_gte_100 = products.select { |p| p.variants.any? {|v| v.stock.to_i >= 100} }
+      sorted_products_gte_100 = sorted_products.select { |p| p.variants.any? {|v| v.stock.to_i >= 100} }
 
       expect(sorted_products_gte_100).to eq products_gte_100
 
       # assert products with stock == 0 go to the end
-      products_stock_0 = products.select { |p| p.variants.all? {|v| v.stock == 0} }
+      products_stock_0 = products.select { |p| p.variants.all? {|v| v.stock.to_i == 0} }
       if products_stock_0.any?
         last_sorted_products = sorted_products[-(products_stock_0.count)..-1]
         expect(last_sorted_products).to eq products_stock_0
