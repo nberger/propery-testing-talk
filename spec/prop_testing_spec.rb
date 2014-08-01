@@ -21,7 +21,9 @@ describe "property testing" do
     property_of {
       len = range(2, 20)
       array(len) {
-        freq([1, :literal, nil], [1,:range,0,1], [1,:range,0,100], [1, :positive_integer])
+        array(2) {
+          freq([1, :literal, nil], [1,:range,0,1], [1,:range,0,100], [1, :positive_integer])
+        }
       }
     }.check { |stocks|
       products = build_products(stocks)
@@ -44,8 +46,10 @@ describe "property testing" do
   end
 
   def build_products(stocks)
-    stocks.map { |stock|
-      Product.new([Variant.new(stock)])
+    stocks.map { |product_stocks|
+      Product.new(
+        product_stocks.map { |stock| Variant.new(stock) }
+      )
     }
   end
 
