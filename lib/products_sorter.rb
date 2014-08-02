@@ -14,3 +14,14 @@ class ProductsSorter
   end
 
 end
+
+class Variant < Struct.new(:stock)
+end
+
+class Product < Struct.new(:variants)
+
+  def inspect
+    variants.map(&:stock).join("|")
+  end
+
+end

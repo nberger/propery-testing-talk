@@ -2,18 +2,8 @@ require 'rspec'
 require 'rantly/property'
 require 'rantly/shrinks'
 require 'rantly/rspec_extensions'
+
 require 'products_sorter'
-
-class Variant < Struct.new(:stock)
-end
-
-class Product < Struct.new(:variants)
-
-  def inspect
-    variants.map(&:stock).join("|")
-  end
-
-end
 
 describe "property testing" do
 
